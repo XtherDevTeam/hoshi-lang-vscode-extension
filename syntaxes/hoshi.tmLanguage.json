@@ -23,7 +23,7 @@
       "patterns": [
         {
           "name": "keyword.control.hoshi",
-          "match": "\\b(use|func|interface|struct|impl|let|in|for|forEach|while|if|elif|else|return|continue|break|cast|constructor|import|export|as|from|try|catch|finally|throw|type_id|dyn_cast|noffi|always_inline|new|interfaceof|static|operator)\\b"
+          "match": "\\b(use|func|interface|struct|impl|let|in|for|forEach|while|if|elif|else|return|continue|break|cast|constructor|import|export|as|from|try|catch|finally|throw|type_id|dyn_cast|noffi|always_inline|new|interfaceof|static|operator|callable|alias)\\b"
         }
       ]
     },
@@ -37,7 +37,7 @@
       "patterns": [
         { "name": "constant.language.hoshi", "match": "\\b(true|false|null)\\b" },
         { "name": "constant.numeric.decimal.hoshi", "match": "\\b[0-9]+\\.[0-9]+\\b" },
-        { "name": "constant.numeric.integer.hoshi", "match": "\\b[0-9]+\\b" },
+        { "name": "constant.numeric.integer.hoshi", "match": "\\b(0b[01]+|0o[0-7]+|0x[0-9a-fA-F]+|[0-9]+(u|U|l|L)?)\\b" },
         { "name": "constant.elipsis.hoshi", "match": "\\.\\.\\." }
       ]
     },
@@ -94,6 +94,10 @@
         {
           "name": "entity.name.function.hoshi",
           "match": "(?<=(func|constructor)\\s+)[a-zA-Z_][a-zA-Z0-9_]*"
+        },
+        {
+          "name": "entity.name.type_alias.hoshi",
+          "match": "(?<=(alias)\\s+)[a-zA-Z_][a-zA-Z0-9_]*"
         },
         {
           "name": "entity.name.invocation.hoshi",
