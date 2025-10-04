@@ -23,7 +23,7 @@
       "patterns": [
         {
           "name": "keyword.control.hoshi",
-          "match": "\\b(use|func|interface|struct|impl|let|in|for|forEach|while|if|elif|else|return|continue|break|cast|constructor|import|export|as|from|try|catch|finally|throw|type_id|dyn_cast|noffi|always_inline|new|interfaceof|static|operator|callable|alias)\\b"
+          "match": "\\b(use|func|interface|struct|impl|let|in|for|forEach|while|if|elif|else|return|continue|break|cast|constructor|import|export|as|from|try|catch|finally|throw|type_id|dyn_cast|noffi|always_inline|new|interfaceof|static|operator|callable|alias|intrinsic)\\b"
         }
       ]
     },
