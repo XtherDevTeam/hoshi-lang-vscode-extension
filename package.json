@@ -27,7 +27,18 @@
         "extensions": [
           ".hoshi"
         ],
-        "configuration": "./language-configuration.json"
+        "configuration": "./hoshi.language-configuration.json"
+      },
+      {
+        "id": "yoi",
+        "aliases": [
+          "Yoi",
+          "yoi"
+        ],
+        "extensions": [
+          ".yoi"
+        ],
+        "configuration": "./yoi.language-configuration.json"
       }
     ],
     "grammars": [
@@ -35,6 +46,11 @@
         "language": "hoshi",
         "scopeName": "source.hoshi",
         "path": "./syntaxes/hoshi.tmLanguage.json"
+      },
+      {
+        "language": "yoi",
+        "scopeName": "source.yoi-ir",
+        "path": "./syntaxes/yoi.tmLanguage.json"
       }
     ]
   },

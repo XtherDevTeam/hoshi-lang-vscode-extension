@@ -1,0 +1,158 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Yoi IR",
+  "scopeName": "source.yoi-ir",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#variables" },
+    { "include": "#entities" },
+    { "include": "#opcodes" },
+    { "include": "#keywords" },
+    { "include": "#storage" },
+    { "include": "#constants" },
+    { "include": "#metadata" },
+    { "include": "#punctuation" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.yoi-ir",
+          "match": "//.*$"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.yoi-ir",
+          "match": "\\b(Module|func|struct|interface|impl|for|virtual|Variables)\\b"
+        }
+      ]
+    },
+    "opcodes": {
+      "patterns": [
+        {
+          "name": "keyword.operator.instruction.yoi-ir",
+          "match": "\\b(push_string|load_local|store_member|ret|invoke_imported|pop|ret_none|new_struct|invoke|construct_interface_impl|invoke_virtual|push_integer|jump_if_true|jump|basic_cast_int|basic_cast_deci|basic_cast_char|basic_cast_bool|basic_cast_short|basic_cast_unsigned|add|sub|mul|div|mod|left_shift|right_shift|bitwise_not|bitwise_and|bitwise_or|bitwise_xor|less_than|greater_than|less_equal|greater_equal|equal|not_equal|pointer_cast|new_array_int|new_array_bool|new_array_deci|new_array_str|new_array_char|new_array_struct|new_array_interface|array_length|interfaceof|store_global|store_element|load_member|load_element|nop|typeid_object_non_stack|dyn_cast_any|dyn_cast_int|dyn_cast_bool|dyn_cast_deci|dyn_cast_str|dyn_cast_char|dyn_cast_struct|invoke_dangling|bind_elements_post|bind_elements_pred|bind_fields_post|bind_fields_pred)\\b"
+        }
+      ]
+    },
+    "storage": {
+      "patterns": [
+        {
+          "name": "storage.type.yoi-ir",
+          "match": "\\b(none|int|string|bool|decimal|char|unsigned|short|pointer|pointerObject)\\b"
+        },
+        {
+          "name": "storage.modifier.yoi-ir",
+          "match": "@[A-Z][a-zA-Z]+"
+        }
+      ]
+    },
+    "entities": {
+      "patterns": [
+        {
+          "name": "entity.name.label.yoi-ir",
+          "match": "\\b(block|codeBlock)#[0-9]+:?"
+        },
+        {
+          "comment": "Function name in a declaration",
+          "match": "(?<=func\\s)([\\w:<>#$]+)",
+          "name": "entity.name.function.yoi-ir"
+        },
+        {
+          "comment": "Struct name in a declaration",
+          "match": "(?<=struct\\s)([\\w<>,#-]+)",
+          "name": "entity.name.type.struct.yoi-ir"
+        },
+        {
+          "comment": "Interface name in a declaration",
+          "match": "(?<=interface\\s)([\\w<>,#-]+)",
+          "name": "entity.name.type.interface.yoi-ir"
+        },
+        {
+          "comment": "Complex type names (struct, interface, etc.)",
+          "captures": {
+            "1": { "name": "storage.type.yoi-ir" },
+            "2": { "name": "constant.numeric.yoi-ir" },
+            "3": { "name": "constant.numeric.yoi-ir" }
+          },
+          "match": "\\b(struct|interface|virtual_method)#([0-9]+)#([0-9]+)"
+        },
+        {
+          "comment": "Implementation names and other complex identifiers",
+          "name": "entity.name.type.yoi-ir",
+          "match": "\\b[0-9a-zA-Z_][\\w_]*(?:#[^\\s()]+)+"
+        }
+      ]
+    },
+    "constants": {
+      "patterns": [
+        {
+          "comment": "Variable or constant references like string_const#0",
+          "captures": {
+            "1": { "name": "support.constant.yoi-ir" },
+            "2": { "name": "constant.numeric.yoi-ir" }
+          },
+          "match": "\\b(string_const|localVar|globalVar|externVar|structObject|integerObject|booleanObject|decimalObject|stringObject|characterObject|unsignedObject|shortObject)#([\\w\\d<>,#-]+)"
+        },
+        {
+          "comment": "Operand literals like int(0)",
+          "begin": "\\b(int|double|bool|char|unsigned|short|index)\\b(\\()",
+          "beginCaptures": {
+            "1": { "name": "storage.type.yoi-ir" },
+            "2": { "name": "punctuation.parenthesis.begin.yoi-ir" }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": { "name": "punctuation.parenthesis.end.yoi-ir" }
+          },
+          "patterns": [
+            { "name": "constant.numeric.yoi-ir", "match": "[0-9]+" },
+            { "name": "constant.language.boolean.yoi-ir", "match": "\\b(true|false)\\b" }
+          ]
+        },
+        {
+          "name": "constant.numeric.yoi-ir",
+          "match": "(?<![\\w#])\\b[0-9]+\\b(?!#)"
+        }
+      ]
+    },
+    "variables": {
+       "patterns": [
+        {
+          "comment": "Variable declaration in Variables block",
+          "match": "^\\s*(#\\d+)\\s+([\\w_]+)(\\(scope#\\d+\\))\\s*:",
+          "captures": {
+            "1": { "name": "constant.numeric.yoi-ir" },
+            "2": { "name": "variable.other.yoi-ir" },
+            "3": { "name": "comment.block.scope.yoi-ir" }
+          }
+        }
+       ]
+    },
+    "metadata": {
+      "patterns": [
+        {
+          "name": "meta.tag.metadata.yoi-ir",
+          "comment": "Matches metadata like !regressed_interface_impl{0,2}",
+          "match": "(!)([\\w_]+)(\\{[\\w\\d,]+\\})?",
+          "captures": {
+            "1": { "name": "punctuation.definition.tag.yoi-ir" },
+            "2": { "name": "entity.name.tag.yoi-ir" },
+            "3": { "name": "meta.brace.curly.yoi-ir" }
+          }
+        }
+      ]
+    },
+    "punctuation": {
+      "patterns": [
+        { "name": "punctuation.accessor.yoi-ir", "match": "::" },
+        { "name": "punctuation.separator.key-value.yoi-ir", "match": ":" },
+        { "name": "punctuation.separator.hash.yoi-ir", "match": "#" },
+        { "name": "punctuation.separator.comma.yoi-ir", "match": "," }
+      ]
+    }
+  }
+}
