@@ -3,6 +3,7 @@
   "name": "Hoshi",
   "scopeName": "source.hoshi",
   "patterns": [
+    { "include": "#macros" },
     { "include": "#comments" },
     { "include": "#keywords" },
     { "include": "#strings" },
@@ -13,6 +14,33 @@
     { "include": "#variables" }
   ],
   "repository": {
+    "macros": {
+      "patterns": [
+        {
+          "name": "comment.block.macro.hoshi",
+          "begin": "\\[\\[",
+          "end": "\\]\\]",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.annotation.begin.hoshi" }
+          },
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.annotation.end.hoshi" }
+          },
+          "patterns": [
+            { "include": "#strings" },
+            { "include": "#constants" },
+            {
+              "name": "keyword.operator.comparison.hoshi",
+              "match": "==|!=|<=|>=|<|>"
+            },
+            {
+              "name": "entity.name.tag.hoshi",
+              "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
+            }
+          ]
+        }
+      ]
+    },
     "comments": {
       "patterns": [
         { "name": "comment.line.double-slash.hoshi", "match": "//.*" },
