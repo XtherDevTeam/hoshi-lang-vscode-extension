@@ -3,14 +3,14 @@
   "name": "Hoshi",
   "scopeName": "source.hoshi",
   "patterns": [
-    { "include": "#macros" },
     { "include": "#comments" },
-    { "include": "#keywords" },
     { "include": "#strings" },
-    { "include": "#constants" },
-    { "include": "#operators" },
-    { "include": "#punctuation" },
+    { "include": "#macros" },
+    { "include": "#keywords" },
     { "include": "#entities" },
+    { "include": "#constants" },
+    { "include": "#punctuation" },
+    { "include": "#operators" },
     { "include": "#variables" }
   ],
   "repository": {
@@ -51,7 +51,7 @@
       "patterns": [
         {
           "name": "keyword.control.hoshi",
-          "match": "\\b(use|func|interface|struct|impl|let|in|for|forEach|while|if|elif|else|return|continue|break|cast|constructor|import|export|as|from|try|catch|finally|throw|type_id|dyn_cast|noffi|always_inline|new|interfaceof|static|operator|callable|alias|finalizer|enum)\\b"
+          "match": "\\b(func|interface|struct|impl|let|in|for|forEach|while|if|elif|else|return|continue|break|cast|constructor|import|export|as|from|try|catch|finally|throw|type_id|dyn_cast|noffi|always_inline|new|interfaceof|static|operator|callable|alias|finalizer|enum)\\b"
         }
       ]
     },
@@ -114,18 +114,56 @@
             {
                 "name": "punctuation.accessor.hoshi",
                 "match": "\\."
+            },
+            {
+                "name": "punctuation.section.block.begin.hoshi",
+                "match": "\\{"
+            },
+            {
+                "name": "punctuation.section.block.end.hoshi",
+                "match": "\\}"
+            },
+            {
+                "name": "punctuation.section.parens.begin.hoshi",
+                "match": "\\("
+            },
+            {
+                "name": "punctuation.section.parens.end.hoshi",
+                "match": "\\)"
+            },
+            {
+                "name": "punctuation.section.brackets.begin.hoshi",
+                "match": "\\["
+            },
+            {
+                "name": "punctuation.section.brackets.end.hoshi",
+                "match": "\\]"
             }
         ]
     },
     "entities": {
       "patterns": [
         {
-          "name": "entity.name.function.hoshi",
-          "match": "(?<=(func|constructor)\\s+)[a-zA-Z_][a-zA-Z0-9_]*"
+          "name": "meta.use.hoshi",
+          "match": "\\b(use)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
+          "captures": {
+            "1": { "name": "keyword.control.hoshi" },
+            "2": { "name": "entity.name.type.hoshi" }
+          }
         },
         {
-          "name": "entity.name.type_alias.hoshi",
-          "match": "(?<=(alias)\\s+)[a-zA-Z_][a-zA-Z0-9_]*"
+          "name": "meta.alias.hoshi",
+          "match": "\\b(alias)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*(=)\\s*([a-zA-Z_][a-zA-Z0-9_]*)",
+          "captures": {
+            "1": { "name": "keyword.control.hoshi" },
+            "2": { "name": "entity.name.type.hoshi" },
+            "3": { "name": "keyword.operator.assignment.hoshi" },
+            "4": { "name": "entity.name.type.hoshi" }
+          }
+        },
+        {
+          "name": "entity.name.function.hoshi",
+          "match": "(?<=(func|constructor)\\s+)[a-zA-Z_][a-zA-Z0-9_]*"
         },
         {
           "name": "entity.name.invocation.hoshi",
@@ -144,13 +182,18 @@
           "match": "(?<=\\.\\.\\.+)(\\s*)[a-zA-Z_][a-zA-Z0-9_]*"
         },
         {
-          "name": "entity.name.tag.template.hoshi",
-          "begin": "<",
+          "comment": "Restricted Template matching to avoid conflict with Less Than operator",
+          "name": "meta.type.parameters.hoshi",
+          "begin": "(?<=[a-zA-Z0-9_])<(?![=<])",
           "end": ">",
-          "patterns": [{ "include": "#keywords" }, { "include": "#variables" }]
+          "patterns": [
+              { "include": "#keywords" }, 
+              { "include": "#variables" }, 
+              { "include": "#punctuation" }
+          ]
         },
         {
-          "name": "entity.name.after.colon.hoshi",
+          "name": "entity.name.type.hoshi",
           "match": "(?<=:\\s+)[a-zA-Z_][a-zA-Z0-9_]*"
         },
         {
@@ -163,7 +206,7 @@
         },
         {
           "name": "entity.name.dynamic.array.initializer.hoshi",
-          "match": "(?<=new\\s+)[a-zA-Z_][a-zA-Z0-9_\\.]*(?=\\[)"
+          "match": "(?<=new\\s+)[a-zA-Z_][a-zA-Z0-9_\\.]*(?=\\s*\\[)"
         }
       ]
     },
