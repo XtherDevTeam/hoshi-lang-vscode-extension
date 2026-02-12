@@ -2,7 +2,8 @@
   "name": "hoshi-lang",
   "displayName": "Hoshi Language Support",
   "description": "Syntax highlighting and debug support for the Hoshi language.",
-  "version": "0.0.1",
+  "publisher": "WingzhongZau",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.85.0"
   },
