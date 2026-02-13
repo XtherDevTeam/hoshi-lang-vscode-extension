@@ -3,7 +3,7 @@
   "displayName": "Hoshi Language Support",
   "description": "Syntax highlighting and debug support for the Hoshi language.",
   "publisher": "WingzhongZau",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -18,7 +18,11 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
-    "breakpoints": [{ "language": "hoshi" }],
+    "breakpoints": [
+      {
+        "language": "hoshi"
+      }
+    ],
     "languages": [
       {
         "id": "hoshi",
