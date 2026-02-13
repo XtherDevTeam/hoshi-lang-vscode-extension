@@ -1,0 +1,29 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "scopeName": "source.hoshi.markdown",
+  "injectionSelector": "L:text.html.markdown",
+  "patterns": [
+    {
+      "include": "#hoshi-fenced-code-block"
+    }
+  ],
+  "repository": {
+    "hoshi-fenced-code-block": {
+      "begin": "(^|\\G)(\\s*)(`{3,}|~{3,})\\s*(?i:(hoshi))(?=[^`~]*$)",
+      "beginCaptures": {
+        "3": { "name": "punctuation.definition.markdown" },
+        "4": { "name": "constant.other.language-name.markdown" }
+      },
+      "end": "(^|\\G)(\\2|\\s*)(\\3)\\s*$",
+      "endCaptures": {
+        "3": { "name": "punctuation.definition.markdown" }
+      },
+      "contentName": "meta.embedded.block.hoshi",
+      "patterns": [
+        {
+          "include": "source.hoshi"
+        }
+      ]
+    }
+  }
+}

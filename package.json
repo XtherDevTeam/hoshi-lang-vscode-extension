@@ -13,6 +13,7 @@
   ],
   "activationEvents": [
     "onLanguage:hoshi",
+    "onLanguage:markdown",
     "onDebug"
   ],
   "main": "./out/extension.js",
@@ -52,6 +53,13 @@
         "language": "yoi",
         "scopeName": "source.yoi-ir",
         "path": "./syntaxes/yoi.tmLanguage.json"
+      },
+      {
+        "scopeName": "source.hoshi.markdown",
+        "path": "./syntaxes/hoshi-markdown.tmLanguage.json",
+        "injectTo": [
+          "text.html.markdown"
+        ]
       }
     ]
   },
